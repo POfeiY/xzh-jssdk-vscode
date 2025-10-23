@@ -1,0 +1,30 @@
+{
+  "name": "webapp",
+  "type": "module",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "rsbuild dev",
+    "build": "vue-tsc -b && rsbuild build",
+    "preview": "rsbuild preview"
+  },
+  "dependencies": {
+    "@vueuse/core": "^14.0.0",
+    "vue": "^3.5.22"
+  },
+  "devDependencies": {
+    "@iconify-json/logos": "^1.2.9",
+    "@rsbuild/core": "^1.5.17",
+    "@rsbuild/plugin-vue": "^1.2.0",
+    "@types/node": "^24.6.0",
+    "@vue/tsconfig": "^0.8.1",
+    "typescript": "~5.9.3",
+    "unocss": "^66.5.4",
+    "vue-tsc": "^3.1.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "vite": "npm:rolldown-vite@7.1.14"
+    }
+  }
+}

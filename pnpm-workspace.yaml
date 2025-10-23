@@ -1,6 +1,7 @@
 packages:
   - playground
   - examples/*
+  - webapp
 onlyBuiltDependencies:
   - '@vscode/vsce-sign'
   - esbuild
