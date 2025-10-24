@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "rsbuild dev",
-    "build": "vue-tsc -b && rsbuild build",
+    "build": "rsbuild build",
     "preview": "rsbuild preview"
   },
   "dependencies": {

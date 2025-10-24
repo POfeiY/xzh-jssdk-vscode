@@ -46,12 +46,11 @@ function getHtmlForWebview() {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>webapp</title>
-    <script crossorigin src="/webapp/assets/index-bm9Wf8uh.js"></script>
-    <link rel="stylesheet" crossorigin href="/webapp/assets/index-CYsY0Lgn.css">
-  </head>
+  <script defer src="/webapp/static/js/lib-vue.2f9000e5.js"></script><script defer src="/webapp/static/js/index.3a6ae001.js"></script><link href="/webapp/static/css/index.677e40e0.css" rel="stylesheet"></head>
   <body>
     <div id="app"></div>
   </body>
 </html>
+
 `
 }
