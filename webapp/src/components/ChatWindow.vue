@@ -2,10 +2,13 @@
 // import { ref } from 'vue'
 // const recordList = ref([])
 </script>
+
 <template>
   <div>
     <section>
-      <p class="text-lg">AI Assistant</p>
+      <p class="text-lg">
+        AI Assistant
+      </p>
     </section>
     <section>
       <!-- <MessageList /> -->
