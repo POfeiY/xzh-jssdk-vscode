@@ -1,11 +1,12 @@
 <script setup lang="ts">
+import svg from '../assets/vite.svg'
 </script>
 
 <template>
   <div>
     <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a> 
+      <img :src="svg" class="logo" alt="Vite logo">
+    </a>
   </div>
 </template>
 
@@ -19,5 +20,4 @@
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
-
 </style>

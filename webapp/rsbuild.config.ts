@@ -10,6 +10,11 @@ export default defineConfig({
       index: './src/main.ts',
     },
   },
+  output: {
+    dataUriLimit: {
+      svg: 4 * 1024,
+    },
+  },
   plugins: [
     pluginVue(),
   ],
