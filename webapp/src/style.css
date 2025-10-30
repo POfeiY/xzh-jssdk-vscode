@@ -28,7 +28,7 @@ body {
   place-items: center;
   width: 100vw;
   height: 100vh;
-  overflow: hidden scroll;
+  overflow: hidden;
 }
 
 h1 {
@@ -55,13 +55,16 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+p {
+  margin: 0;
+  padding: 0;
+}
+
 .card {
   padding: 2em;
 }
 
 #app {
-  margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
 

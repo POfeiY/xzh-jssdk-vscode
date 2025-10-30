@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import SplashScreen from './components/SplashScreen.vue';
+import ChatWindow from './components/ChatWindow.vue'
+import SplashScreen from './components/SplashScreen.vue'
 </script>
 
 <template>
-  <SplashScreen />
+  <!-- <SplashScreen /> -->
+  <ChatWindow />
 </template>
-
-
