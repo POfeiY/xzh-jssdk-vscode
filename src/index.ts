@@ -36,8 +36,9 @@ class JssdkViewProvider implements vscode.WebviewViewProvider {
 
     webviewView.webview.html = await this._getHtmlForWebview(_context, webviewView.webview!)
 
-    webviewView.webview.onDidReceiveMessage((ev) => {
-      console.error(ev)
+    webviewView.webview.onDidReceiveMessage((message) => {
+      // TODO: rpc tools
+      console.error(message)
     })
   }
 
