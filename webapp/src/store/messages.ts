@@ -8,5 +8,11 @@ export const useMessagesStore = defineStore('messages', () => {
     messages.value.push(msg)
   }
 
-  return { messages, addMessage }
+  function deleteMessage(id: string) {
+    const idx = messages.value.findIndex(msg => msg.id === id)
+    if (idx > -1)
+      messages.value.splice(idx, 1)
+  }
+
+  return { messages, addMessage, deleteMessage }
 })

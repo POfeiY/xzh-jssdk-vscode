@@ -46,7 +46,7 @@ async function sendQuestion() {
 
 <template>
   <div class="input-box">
-    <n-input v-model:value="question" :loading="loading" round placeholder="search">
+    <n-input v-model:value="question" :loading="loading" round placeholder="请说出你的想法">
       <template #prefix>
         <n-icon :component="AttachOutline" />
       </template>
@@ -63,8 +63,5 @@ async function sendQuestion() {
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-}
-.btn-icon {
-  cursor: pointer;
 }
 </style>

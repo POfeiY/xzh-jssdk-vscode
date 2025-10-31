@@ -18,6 +18,7 @@ declare module 'vue' {
     MessageList: typeof import('./src/components/MessageList.vue')['default']
     NIcon: typeof import('naive-ui')['NIcon']
     NInput: typeof import('naive-ui')['NInput']
+    NMessageProvider: typeof import('naive-ui')['NMessageProvider']
     SplashScreen: typeof import('./src/components/SplashScreen.vue')['default']
   }
 }

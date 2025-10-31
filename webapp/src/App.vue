@@ -5,5 +5,7 @@ import SplashScreen from './components/SplashScreen.vue'
 
 <template>
   <!-- <SplashScreen /> -->
-  <ChatWindow />
+  <n-message-provider>
+    <ChatWindow />
+  </n-message-provider>
 </template>
