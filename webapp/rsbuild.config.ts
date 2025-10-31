@@ -23,6 +23,11 @@ export default defineConfig({
     pluginVue(),
     pluginLess(),
   ],
+  resolve: {
+    alias: {
+      '~': './src',
+    },
+  },
   tools: {
     rspack: {
       plugins: [

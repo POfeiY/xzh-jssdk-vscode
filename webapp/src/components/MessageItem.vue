@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import type { Message } from '../types'
+import type { Message } from '~/types'
 import { ArrowSync24Regular, Bot24Regular, Copy24Regular, Delete28Regular, PersonFeedback24Regular } from '@vicons/fluent'
-import { useMessagesStore } from '../store/messages'
+import { Role } from '~/composable/constant'
+import { useMessagesStore } from '~/store/messages'
 
 const props = defineProps<{ msg: Message }>()
-const { deleteMessage } = useMessagesStore()
+const messageStore = useMessagesStore()
 const messageNotice = useMessage()
 
 const isUserRole = computed(() => props.msg.role === 'user')
@@ -12,7 +13,7 @@ const messageContainerClass = computed(() => !isUserRole.value ? 'message-item m
 const roleIcon = computed(() => !isUserRole.value ? Bot24Regular : PersonFeedback24Regular)
 
 function deleteHandler() {
-  deleteMessage(props.msg.id)
+  messageStore.deleteMessage(props.msg.id)
 }
 
 async function copy() {
@@ -24,11 +25,12 @@ async function copy() {
     messageNotice.error('复制到剪切板时发生错误❌')
   }
 }
-/**
- * TODO:copy content
- * TODO:resend question
- *
- */
+
+async function resend() {
+  const [_, tempId] = props.msg.id.split('-')
+  messageStore.updateMessageContent(`${Role.ASSISTANT}-${tempId}`, '')
+  await messageStore.sendQuestion(props.msg.question, tempId!)
+}
 </script>
 
 <template>
@@ -37,7 +39,7 @@ async function copy() {
       <div class="btn-wrapper">
         <i class="btn-icon" @click.stop="copy"><n-icon :component="Copy24Regular" size="20" /></i>
         <template v-if="isUserRole">
-          <i class="btn-icon"><n-icon :component="ArrowSync24Regular" size="20" /></i>
+          <i class="btn-icon" @click.stop="resend"><n-icon :component="ArrowSync24Regular" size="20" /></i>
           <i class="btn-icon" @click.stop="deleteHandler"><n-icon :component="Delete28Regular" size="20" /></i>
         </template>
       </div>
