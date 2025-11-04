@@ -1,6 +1,8 @@
+import type { PostMessageType } from './types'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import vscode from 'vscode'
+import { sseRequest } from './composable/sseRequest'
 
 export function activate(context: vscode.ExtensionContext) {
   const provider = new JssdkViewProvider(context.extensionUri, context.extensionPath)
@@ -13,7 +15,7 @@ export function activate(context: vscode.ExtensionContext) {
 class JssdkViewProvider implements vscode.WebviewViewProvider {
   public static readonly viewType = 'jssdk-doc-assistant'
 
-  private _view?: vscode.WebviewView
+  _view?: vscode.WebviewView
   private extensionPath: string
 
   constructor(
@@ -37,9 +39,33 @@ class JssdkViewProvider implements vscode.WebviewViewProvider {
     webviewView.webview.html = await this._getHtmlForWebview(_context, webviewView.webview!)
 
     webviewView.webview.onDidReceiveMessage((message) => {
-      // TODO: rpc tools
-      console.error(message)
+      this.receiveMessageFromWebview(message)
     })
+  }
+
+  /**
+   * 接收webview发送的消息
+   */
+  receiveMessageFromWebview(message: PostMessageType) {
+    if (!message.command)
+      return
+    switch (message.command) {
+      case 'invokeAi':
+        // 发送sse请求
+        sseRequest(message.params.url, message.params.body, this.sendMessageToWebview)
+        break
+
+      default:
+        break
+    }
+  }
+
+  /**
+   * 发送消息
+   * @param message
+   */
+  sendMessageToWebview(message: PostMessageType) {
+    this._view?.webview.postMessage(message)
   }
 
   private async _getHtmlForWebview(ctx: vscode.WebviewViewResolveContext, webview: vscode.Webview) {
