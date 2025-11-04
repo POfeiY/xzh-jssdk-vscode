@@ -1,11 +1,14 @@
 import type { Message } from '../types'
 import { defineStore } from 'pinia'
 import { Role } from '~/composable/constant'
-import { getMockBotResponse } from '../composable/useMockRequest'
+import { useRequestAi } from '~/composable/useRequestAi'
+// import { getMockBotResponse } from '../composable/useMockRequest'
 
 export const useMessagesStore = defineStore('messages', () => {
   const isQuerying = ref<boolean>(false)
   const messages = ref<Message[]>([])
+
+  const api = useRequestAi()
 
   function updateIsQuerying(status: boolean) {
     isQuerying.value = status
@@ -37,22 +40,26 @@ export const useMessagesStore = defineStore('messages', () => {
   async function sendQuestion(question: string, id: string) {
     updateIsQuerying(true)
     try {
-      const content = await getMockBotResponse()
       const isMsgExisted = messages.value.map(m => m.id).includes(`${Role.ASSISTANT}-${id}`)
-      // 存量消息更新
+      // 存量消息清空
       if (isMsgExisted) {
-        updateMessageContent(`${Role.ASSISTANT}-${id}`, content)
+        updateMessageContent(`${Role.ASSISTANT}-${id}`, '')
       }
       // 新增消息
       else {
         addMessage({
           role: Role.ASSISTANT,
           id: `${Role.ASSISTANT}-${id}`,
-          content,
+          content: '',
           question,
           timestamp: performance.now(),
         })
       }
+      await api.request([{ role: 'user', content: question }], (response: { params: { content: string } }) => {
+        const cacheMessage = messages.value.find(msg => msg.id === `${Role.ASSISTANT}-${id}`)
+        if (cacheMessage)
+          cacheMessage.content += response.params.content
+      })
     }
     catch {
     // TODO: update user message status

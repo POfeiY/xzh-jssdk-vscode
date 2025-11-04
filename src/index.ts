@@ -22,6 +22,7 @@ class JssdkViewProvider implements vscode.WebviewViewProvider {
     private readonly _extensionUri: vscode.Uri,
     private readonly _extensionPath: string,
   ) {
+    this._extensionUri = _extensionUri
     this.extensionPath = _extensionPath
   }
 

@@ -5,6 +5,16 @@ import { uniqueId } from 'lodash-es'
 import { Role } from '~/composable/constant'
 import { useMessagesStore } from '~/store/messages'
 
+onMounted(() => {
+  // register
+  window.EventCenter = new Map()
+})
+
+onUnmounted(() => {
+  // dispose
+  window.EventCenter = null
+})
+
 const messageStore = useMessagesStore()
 
 const question = ref<string>('')
