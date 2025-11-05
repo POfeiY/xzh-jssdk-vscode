@@ -37,7 +37,8 @@ class JssdkViewProvider implements vscode.WebviewViewProvider {
       ],
     }
 
-    webviewView.webview.html = await this._getHtmlForWebview(_context, webviewView.webview!)
+    webviewView.webview.html = this._getHtmlForWebview()
+    // webviewView.webview.html = await this._getHtmlForWebview(_context, webviewView.webview!)
 
     webviewView.webview.onDidReceiveMessage((message) => {
       this.receiveMessageFromWebview(message)
@@ -69,21 +70,49 @@ class JssdkViewProvider implements vscode.WebviewViewProvider {
     this._view?.webview.postMessage(message)
   }
 
-  private async _getHtmlForWebview(ctx: vscode.WebviewViewResolveContext, webview: vscode.Webview) {
-    const appDistPath = path.join(this.extensionPath, '/dist/webapp')
-    const indexPath = path.join(appDistPath, 'index.html')
-    let indexHtml = await fs.readFile(indexPath, { encoding: 'utf8' })
-
-    const matchLinks = /(href|src)="([^"]*)"/g
-    const toUri = (_: string, prefix: 'href' | 'src', link: string) => {
-      if (link === '#') {
-        return `${prefix}="${link}"`
-      }
-      const _path = path.join(appDistPath, link)
-      const uri = vscode.Uri.file(_path)
-      return `${prefix}="${webview.asWebviewUri(uri)}"`
-    }
-    indexHtml = indexHtml.replace(matchLinks, toUri)
-    return indexHtml
+  private _getHtmlForWebview() {
+    return `<!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>xzh-jssdk-vscode</title>
+        <style>
+          body {
+            margin: 0;
+            box-sizing: border-box;
+            padding: .5em;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+          }
+          body #jssdk-vscode {
+            width: 100%;
+            height: 100%;
+          }
+        </style>
+      </head>
+      <body>
+        <iframe id="jssdk-vscode" src="http://20.3.245.57:3000/chat/share?shareId=hf87xl6rb9v6xspcbajzt5s0" frameborder="0"></iframe>
+      </body>
+      </html>
+      `
   }
+  // private async _getHtmlForWebview(ctx: vscode.WebviewViewResolveContext, webview: vscode.Webview) {
+  //   const appDistPath = path.join(this.extensionPath, '/dist/webapp')
+  //   const indexPath = path.join(appDistPath, 'index.html')
+  //   let indexHtml = await fs.readFile(indexPath, { encoding: 'utf8' })
+
+  //   const matchLinks = /(href|src)="([^"]*)"/g
+  //   const toUri = (_: string, prefix: 'href' | 'src', link: string) => {
+  //     if (link === '#') {
+  //       return `${prefix}="${link}"`
+  //     }
+  //     const _path = path.join(appDistPath, link)
+  //     const uri = vscode.Uri.file(_path)
+  //     return `${prefix}="${webview.asWebviewUri(uri)}"`
+  //   }
+  //   indexHtml = indexHtml.replace(matchLinks, toUri)
+  //   return indexHtml
+  // }
 }
