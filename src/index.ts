@@ -8,7 +8,7 @@ export function activate(context: vscode.ExtensionContext) {
   const provider = new JssdkViewProvider(context.extensionUri, context.extensionPath)
 
   context.subscriptions.push(
-    vscode.window.registerWebviewViewProvider(JssdkViewProvider.viewType, provider),
+    vscode.window.registerWebviewViewProvider(JssdkViewProvider.viewType, provider, { webviewOptions: { retainContextWhenHidden: true } }),
   )
 }
 
